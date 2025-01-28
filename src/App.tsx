@@ -10,6 +10,7 @@ import CareerMode from "./pages/CareerMode";
 import QuickMatch from "./pages/QuickMatch";
 import EditTeams from "./pages/EditTeams";
 import LoadGame from "./pages/LoadGame";
+import Gallery from "./pages/Gallery";
 
 const queryClient = new QueryClient();
 
@@ -26,6 +27,7 @@ const App = () => (
             <Route path="/match" element={<QuickMatch />} />
             <Route path="/edit" element={<EditTeams />} />
             <Route path="/load" element={<LoadGame />} />
+            <Route path="/gallery" element={<Gallery />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
