@@ -4,6 +4,7 @@ import { useGame } from '../contexts/GameContext';
 import { Button } from '../components/ui/button';
 import { ArrowLeft, Pause, Play } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { toast } from '../components/ui/use-toast';
 
 const QuickMatch = () => {
   const navigate = useNavigate();
@@ -13,7 +14,9 @@ const QuickMatch = () => {
     setMatchTime,
     isPaused,
     setIsPaused,
-    matchEvents
+    matchEvents,
+    matchState,
+    setMatchState
   } = useGame();
 
   useEffect(() => {
@@ -24,6 +27,11 @@ const QuickMatch = () => {
         setMatchTime((prev: number) => {
           if (prev >= 90) {
             setIsPaused(true);
+            toast({
+              title: "Match Finished",
+              description: "The match has ended!",
+              duration: 3000,
+            });
             return 90;
           }
           return prev + 1;
@@ -41,7 +49,7 @@ const QuickMatch = () => {
       <div className="min-h-screen bg-primary p-4 text-white">
         <div className="max-w-md mx-auto text-center">
           <h1 className="text-2xl font-bold mb-4">Error</h1>
-          <p className="mb-4">Teams not selected</p>
+          <p className="mb-4">Please select teams before starting a match</p>
           <Button onClick={() => navigate('/')} variant="secondary">
             Return to Menu
           </Button>
@@ -50,9 +58,12 @@ const QuickMatch = () => {
     );
   }
 
+  const homeScore = matchEvents.filter(e => e.type === 'GOAL' && e.team === selectedTeams[0].id).length;
+  const awayScore = matchEvents.filter(e => e.type === 'GOAL' && e.team === selectedTeams[1].id).length;
+
   return (
     <div className="min-h-screen bg-primary p-4 text-white">
-      <div className="max-w-md mx-auto">
+      <div className="max-w-4xl mx-auto">
         <div className="flex justify-between items-center mb-6">
           <Button
             variant="ghost"
@@ -80,43 +91,45 @@ const QuickMatch = () => {
         </div>
 
         <motion.div 
-          className="bg-secondary/10 rounded-lg p-4 mb-4"
+          className="bg-secondary/10 rounded-lg p-6 mb-6 backdrop-blur-sm"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
         >
-          <div className="flex justify-between items-center mb-4">
-            <div className="text-center flex-1">
+          <div className="grid grid-cols-3 gap-4 items-center mb-4">
+            <div className="text-center">
               <img 
                 src={selectedTeams[0].flag} 
                 alt={selectedTeams[0].name}
-                className="w-16 h-16 mx-auto mb-2 rounded"
+                className="w-20 h-20 mx-auto mb-2 rounded-lg shadow-lg"
               />
-              <div className="font-bold">{selectedTeams[0].name}</div>
+              <div className="font-bold text-lg">{selectedTeams[0].name}</div>
+              <div className="text-sm text-muted-foreground">Rating: {selectedTeams[0].rating}</div>
             </div>
-            <div className="text-4xl font-bold px-4">
-              {matchEvents.filter(e => e.type === 'GOAL' && e.team === selectedTeams[0].id).length}
-              {' - '}
-              {matchEvents.filter(e => e.type === 'GOAL' && e.team === selectedTeams[1].id).length}
+            <div className="text-center">
+              <div className="text-5xl font-bold mb-2">
+                {homeScore} - {awayScore}
+              </div>
+              <div className="text-2xl font-bold text-accent">
+                {matchTime}'
+              </div>
             </div>
-            <div className="text-center flex-1">
+            <div className="text-center">
               <img 
                 src={selectedTeams[1].flag} 
                 alt={selectedTeams[1].name}
-                className="w-16 h-16 mx-auto mb-2 rounded"
+                className="w-20 h-20 mx-auto mb-2 rounded-lg shadow-lg"
               />
-              <div className="font-bold">{selectedTeams[1].name}</div>
+              <div className="font-bold text-lg">{selectedTeams[1].name}</div>
+              <div className="text-sm text-muted-foreground">Rating: {selectedTeams[1].rating}</div>
             </div>
-          </div>
-          <div className="text-center text-xl font-bold">
-            {matchTime}'
           </div>
         </motion.div>
 
-        <div className="space-y-2">
+        <div className="space-y-2 max-h-[400px] overflow-y-auto">
           {matchEvents.map((event, index) => (
             <motion.div
               key={index}
-              className="bg-secondary/10 rounded p-2 text-sm"
+              className="bg-secondary/10 rounded-lg p-3 text-sm backdrop-blur-sm"
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: index * 0.1 }}

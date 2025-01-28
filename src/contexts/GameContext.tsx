@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState } from 'react';
-import { Team, MatchEvent } from '../types/game';
+import { Team, MatchEvent, MatchState } from '../types/game';
 
 interface SaveSlot {
   id: number;
@@ -35,6 +35,8 @@ interface GameContextType {
   setMatchTime: (time: number | ((prev: number) => number)) => void;
   isPaused: boolean;
   setIsPaused: (paused: boolean) => void;
+  matchState: MatchState | null;
+  setMatchState: (state: MatchState | null) => void;
 }
 
 const GameContext = createContext<GameContextType | undefined>(undefined);
@@ -49,6 +51,7 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
   const [matchEvents, setMatchEvents] = useState<MatchEvent[]>([]);
   const [matchTime, setMatchTime] = useState(0);
   const [isPaused, setIsPaused] = useState(true);
+  const [matchState, setMatchState] = useState<MatchState | null>(null);
 
   const toggleMusic = () => setMusicEnabled(!musicEnabled);
   
@@ -77,6 +80,8 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
         setMatchTime,
         isPaused,
         setIsPaused,
+        matchState,
+        setMatchState,
       }}
     >
       {children}

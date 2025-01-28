@@ -31,3 +31,25 @@ export interface MatchEvent {
   player: string;
   additionalInfo?: string;
 }
+
+export interface MatchStats {
+  possession: number;
+  shots: number;
+  shotsOnTarget: number;
+  corners: number;
+  fouls: number;
+}
+
+export interface MatchState {
+  homeTeam: Team;
+  awayTeam: Team;
+  homeScore: number;
+  awayScore: number;
+  events: MatchEvent[];
+  stats: {
+    home: MatchStats;
+    away: MatchStats;
+  };
+  currentMinute: number;
+  isPlaying: boolean;
+}
