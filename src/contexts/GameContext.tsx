@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState } from 'react';
+import { Team, MatchEvent, Trophy } from '../types/game';
 
 interface SaveSlot {
   id: number;
@@ -26,6 +27,14 @@ interface GameContextType {
   setGameMode: (mode: 'quickMatch' | 'career' | 'edit' | null) => void;
   trophies: Trophy[];
   addTrophy: (trophy: Trophy) => void;
+  selectedTeams: [Team | null, Team | null];
+  setSelectedTeams: (teams: [Team | null, Team | null]) => void;
+  matchEvents: MatchEvent[];
+  setMatchEvents: (events: MatchEvent[]) => void;
+  matchTime: number;
+  setMatchTime: (time: number) => void;
+  isPaused: boolean;
+  setIsPaused: (paused: boolean) => void;
 }
 
 const GameContext = createContext<GameContextType | undefined>(undefined);
@@ -36,6 +45,10 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
   const [saveSlots, setSaveSlots] = useState<SaveSlot[]>([]);
   const [gameMode, setGameMode] = useState<'quickMatch' | 'career' | 'edit' | null>(null);
   const [trophies, setTrophies] = useState<Trophy[]>([]);
+  const [selectedTeams, setSelectedTeams] = useState<[Team | null, Team | null]>([null, null]);
+  const [matchEvents, setMatchEvents] = useState<MatchEvent[]>([]);
+  const [matchTime, setMatchTime] = useState(0);
+  const [isPaused, setIsPaused] = useState(true);
 
   const toggleMusic = () => setMusicEnabled(!musicEnabled);
   
@@ -56,6 +69,14 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
         setGameMode,
         trophies,
         addTrophy,
+        selectedTeams,
+        setSelectedTeams,
+        matchEvents,
+        setMatchEvents,
+        matchTime,
+        setMatchTime,
+        isPaused,
+        setIsPaused,
       }}
     >
       {children}
