@@ -21,13 +21,12 @@ const QuickMatch = () => {
 
     if (!isPaused && matchTime < 90) {
       interval = setInterval(() => {
-        setMatchTime(prev => {
-          const newTime = prev + 1;
-          if (newTime >= 90) {
+        setMatchTime((prev: number) => {
+          if (prev >= 90) {
             setIsPaused(true);
             return 90;
           }
-          return newTime;
+          return prev + 1;
         });
       }, 1000); // 1 second = 1 minute in game time
     }

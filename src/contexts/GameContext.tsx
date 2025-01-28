@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState } from 'react';
-import { Team, MatchEvent, Trophy } from '../types/game';
+import { Team, MatchEvent } from '../types/game';
 
 interface SaveSlot {
   id: number;
@@ -32,7 +32,7 @@ interface GameContextType {
   matchEvents: MatchEvent[];
   setMatchEvents: (events: MatchEvent[]) => void;
   matchTime: number;
-  setMatchTime: (time: number) => void;
+  setMatchTime: (time: number | ((prev: number) => number)) => void;
   isPaused: boolean;
   setIsPaused: (paused: boolean) => void;
 }
