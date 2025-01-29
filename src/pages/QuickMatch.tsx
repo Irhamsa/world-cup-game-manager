@@ -33,14 +33,15 @@ const QuickMatch = () => {
           if (Math.random() < 0.1) { // 10% chance of event per minute
             const eventTypes: ("GOAL" | "YELLOW_CARD" | "RED_CARD")[] = ["GOAL", "YELLOW_CARD", "RED_CARD"];
             const eventType = eventTypes[Math.floor(Math.random() * eventTypes.length)];
-            const team = selectedTeams[Math.floor(Math.random() * 2)];
+            const teamIndex = Math.floor(Math.random() * 2);
+            const team = selectedTeams[teamIndex];
             
             if (team) {
               const newEvent: MatchEvent = {
                 type: eventType,
                 minute: newTime,
                 team: team.id,
-                player: "Player Name", // This would come from the team's players array in a full implementation
+                player: "Player Name",
                 additionalInfo: eventType === "GOAL" ? "Amazing shot!" : 
                               eventType === "YELLOW_CARD" ? "Rough tackle" : 
                               "Serious foul"
