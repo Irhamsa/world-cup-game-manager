@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useGame } from '../contexts/GameContext';
 import { Button } from '../components/ui/button';
-import { ArrowLeft, Pause, Play, Trophy } from 'lucide-react';
+import { ArrowLeft, Pause, Play } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { toast } from '../components/ui/use-toast';
 import TeamSelection from '../components/TeamSelection';
@@ -35,24 +35,26 @@ const QuickMatch = () => {
             const eventType = eventTypes[Math.floor(Math.random() * eventTypes.length)];
             const team = selectedTeams[Math.floor(Math.random() * 2)];
             
-            const newEvent: MatchEvent = {
-              type: eventType,
-              minute: newTime,
-              team: team!.id,
-              player: "Player Name", // This would come from the team's players array in a full implementation
-              additionalInfo: eventType === "GOAL" ? "Amazing shot!" : 
-                            eventType === "YELLOW_CARD" ? "Rough tackle" : 
-                            "Serious foul"
-            };
-            
-            setMatchEvents(prev => [...prev, newEvent]);
-            
-            if (eventType === "GOAL") {
-              toast({
-                title: "GOAL!",
-                description: `${team!.name} scores at ${newTime}'!`,
-                duration: 3000,
-              });
+            if (team) {
+              const newEvent: MatchEvent = {
+                type: eventType,
+                minute: newTime,
+                team: team.id,
+                player: "Player Name", // This would come from the team's players array in a full implementation
+                additionalInfo: eventType === "GOAL" ? "Amazing shot!" : 
+                              eventType === "YELLOW_CARD" ? "Rough tackle" : 
+                              "Serious foul"
+              };
+              
+              setMatchEvents((prev: MatchEvent[]) => [...prev, newEvent]);
+              
+              if (eventType === "GOAL") {
+                toast({
+                  title: "GOAL!",
+                  description: `${team.name} scores at ${newTime}'!`,
+                  duration: 3000,
+                });
+              }
             }
           }
 
