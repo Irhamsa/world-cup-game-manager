@@ -1,11 +1,12 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useGame } from '../contexts/GameContext';
 import { Button } from '../components/ui/button';
-import { ArrowLeft, Pause, Play } from 'lucide-react';
+import { ArrowLeft, Pause, Play, Trophy } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { toast } from '../components/ui/use-toast';
 import TeamSelection from '../components/TeamSelection';
+import { MatchEvent } from '../types/game';
 
 const QuickMatch = () => {
   const navigate = useNavigate();
@@ -16,7 +17,8 @@ const QuickMatch = () => {
     isPaused,
     setIsPaused,
     matchEvents,
-    matchState
+    setMatchEvents,
+    addTrophy
   } = useGame();
 
   useEffect(() => {
@@ -26,12 +28,57 @@ const QuickMatch = () => {
       interval = setInterval(() => {
         setMatchTime((prev) => {
           const newTime = prev + 1;
+          
+          // Simulate match events
+          if (Math.random() < 0.1) { // 10% chance of event per minute
+            const eventTypes: ("GOAL" | "YELLOW_CARD" | "RED_CARD")[] = ["GOAL", "YELLOW_CARD", "RED_CARD"];
+            const eventType = eventTypes[Math.floor(Math.random() * eventTypes.length)];
+            const team = selectedTeams[Math.floor(Math.random() * 2)];
+            
+            const newEvent: MatchEvent = {
+              type: eventType,
+              minute: newTime,
+              team: team!.id,
+              player: "Player Name", // This would come from the team's players array in a full implementation
+              additionalInfo: eventType === "GOAL" ? "Amazing shot!" : 
+                            eventType === "YELLOW_CARD" ? "Rough tackle" : 
+                            "Serious foul"
+            };
+            
+            setMatchEvents(prev => [...prev, newEvent]);
+            
+            if (eventType === "GOAL") {
+              toast({
+                title: "GOAL!",
+                description: `${team!.name} scores at ${newTime}'!`,
+                duration: 3000,
+              });
+            }
+          }
+
           if (newTime >= 90) {
             setIsPaused(true);
+            const homeScore = matchEvents.filter(e => e.type === "GOAL" && e.team === selectedTeams[0]?.id).length;
+            const awayScore = matchEvents.filter(e => e.type === "GOAL" && e.team === selectedTeams[1]?.id).length;
+            
+            const winner = homeScore > awayScore ? selectedTeams[0]?.name : 
+                         awayScore > homeScore ? selectedTeams[1]?.name : 
+                         "Draw";
+                         
+            if (winner !== "Draw") {
+              addTrophy({
+                id: Date.now(),
+                name: "Quick Match Victory",
+                date: new Date().toLocaleDateString(),
+                competition: "Quick Match",
+                imageUrl: "/placeholder.svg"
+              });
+            }
+
             toast({
-              title: "Match Finished",
-              description: "The match has ended!",
-              duration: 3000,
+              title: "Match Finished!",
+              description: winner === "Draw" ? "The match ends in a draw!" : `${winner} wins the match!`,
+              duration: 5000,
             });
             return 90;
           }
@@ -43,14 +90,14 @@ const QuickMatch = () => {
     return () => {
       if (interval) clearInterval(interval);
     };
-  }, [isPaused, matchTime, setMatchTime, setIsPaused]);
+  }, [isPaused, matchTime, setMatchTime, setIsPaused, selectedTeams, setMatchEvents, matchEvents, addTrophy]);
 
   if (!selectedTeams[0] || !selectedTeams[1]) {
     return <TeamSelection />;
   }
 
-  const homeScore = matchEvents.filter(e => e.type === 'GOAL' && e.team === selectedTeams[0].id).length;
-  const awayScore = matchEvents.filter(e => e.type === 'GOAL' && e.team === selectedTeams[1].id).length;
+  const homeScore = matchEvents.filter(e => e.type === "GOAL" && e.team === selectedTeams[0].id).length;
+  const awayScore = matchEvents.filter(e => e.type === "GOAL" && e.team === selectedTeams[1].id).length;
 
   return (
     <div className="min-h-screen bg-primary p-4 text-white">
@@ -65,13 +112,15 @@ const QuickMatch = () => {
             <ArrowLeft className="h-6 w-6" />
           </Button>
           <div className="text-2xl font-bold">
-            {Math.floor(matchTime / 45) === 0 ? "First Half" : "Second Half"}
+            {matchTime >= 90 ? "Full Time" : 
+             Math.floor(matchTime / 45) === 0 ? "First Half" : "Second Half"}
           </div>
           <Button
             variant="ghost"
             size="icon"
             onClick={() => setIsPaused(!isPaused)}
             className="text-white"
+            disabled={matchTime >= 90}
           >
             {isPaused ? (
               <Play className="h-6 w-6" />

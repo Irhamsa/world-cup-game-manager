@@ -3,10 +3,9 @@ import { useGame } from '../contexts/GameContext';
 import { Team } from '../types/game';
 import { Button } from './ui/button';
 import { toast } from './ui/use-toast';
-import { ArrowLeft, ArrowRight } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Trophy } from 'lucide-react';
 import { motion } from 'framer-motion';
 
-// Temporary mock data - this would typically come from an API or database
 const mockTeams: Team[] = [
   {
     id: "1",
@@ -33,6 +32,32 @@ const mockTeams: Team[] = [
     },
     formation: "4-4-2",
     rating: 87
+  },
+  {
+    id: "3",
+    name: "France",
+    flag: "/placeholder.svg",
+    players: [],
+    coach: {
+      id: "c3",
+      name: "Coach Dupont",
+      nationality: "French"
+    },
+    formation: "4-2-3-1",
+    rating: 86
+  },
+  {
+    id: "4",
+    name: "Germany",
+    flag: "/placeholder.svg",
+    players: [],
+    coach: {
+      id: "c4",
+      name: "Coach Mueller",
+      nationality: "German"
+    },
+    formation: "4-3-3",
+    rating: 85
   }
 ];
 
@@ -84,6 +109,7 @@ const TeamSelection = () => {
                     variant={selectedIndex[slot] === index ? "default" : "secondary"}
                     className="w-full justify-between p-4"
                     onClick={() => handleTeamSelect(index, slot as 0 | 1)}
+                    disabled={selectedIndex[slot === 0 ? 1 : 0] === index}
                   >
                     <div className="flex items-center gap-4">
                       <img 
@@ -93,7 +119,10 @@ const TeamSelection = () => {
                       />
                       <div className="text-left">
                         <div className="font-semibold">{team.name}</div>
-                        <div className="text-sm text-muted-foreground">Rating: {team.rating}</div>
+                        <div className="text-sm text-muted-foreground">
+                          <span>Rating: {team.rating}</span>
+                          <span className="ml-2">Formation: {team.formation}</span>
+                        </div>
                       </div>
                     </div>
                     {slot === 0 ? <ArrowRight className="ml-2" /> : <ArrowLeft className="ml-2" />}
