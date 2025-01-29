@@ -47,6 +47,7 @@ const QuickMatch = () => {
                               "Serious foul"
               };
               
+              // Create new array of events and update state
               const updatedEvents = [...matchEvents, newEvent];
               setMatchEvents(updatedEvents);
               
