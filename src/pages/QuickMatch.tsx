@@ -46,7 +46,8 @@ const QuickMatch = () => {
                               "Serious foul"
               };
               
-              setMatchEvents((prev: MatchEvent[]) => [...prev, newEvent]);
+              const updatedEvents = [...matchEvents, newEvent];
+              setMatchEvents(updatedEvents);
               
               if (eventType === "GOAL") {
                 toast({
