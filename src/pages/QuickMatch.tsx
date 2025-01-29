@@ -5,6 +5,7 @@ import { Button } from '../components/ui/button';
 import { ArrowLeft, Pause, Play } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { toast } from '../components/ui/use-toast';
+import TeamSelection from '../components/TeamSelection';
 
 const QuickMatch = () => {
   const navigate = useNavigate();
@@ -15,8 +16,7 @@ const QuickMatch = () => {
     isPaused,
     setIsPaused,
     matchEvents,
-    matchState,
-    setMatchState
+    matchState
   } = useGame();
 
   useEffect(() => {
@@ -46,17 +46,7 @@ const QuickMatch = () => {
   }, [isPaused, matchTime, setMatchTime, setIsPaused]);
 
   if (!selectedTeams[0] || !selectedTeams[1]) {
-    return (
-      <div className="min-h-screen bg-primary p-4 text-white">
-        <div className="max-w-md mx-auto text-center">
-          <h1 className="text-2xl font-bold mb-4">Error</h1>
-          <p className="mb-4">Please select teams before starting a match</p>
-          <Button onClick={() => navigate('/')} variant="secondary">
-            Return to Menu
-          </Button>
-        </div>
-      </div>
-    );
+    return <TeamSelection />;
   }
 
   const homeScore = matchEvents.filter(e => e.type === 'GOAL' && e.team === selectedTeams[0].id).length;
