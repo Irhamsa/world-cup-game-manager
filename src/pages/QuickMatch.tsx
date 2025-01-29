@@ -24,8 +24,9 @@ const QuickMatch = () => {
 
     if (!isPaused && matchTime < 90) {
       interval = setInterval(() => {
-        setMatchTime((prev: number) => {
-          if (prev >= 90) {
+        setMatchTime((prev) => {
+          const newTime = prev + 1;
+          if (newTime >= 90) {
             setIsPaused(true);
             toast({
               title: "Match Finished",
@@ -34,9 +35,9 @@ const QuickMatch = () => {
             });
             return 90;
           }
-          return prev + 1;
+          return newTime;
         });
-      }, 1000); // 1 second = 1 minute in game time
+      }, 1000);
     }
 
     return () => {

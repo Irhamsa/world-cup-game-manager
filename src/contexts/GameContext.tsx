@@ -1,19 +1,11 @@
 import React, { createContext, useContext, useState } from 'react';
-import { Team, MatchEvent, MatchState } from '../types/game';
+import { Team, MatchEvent, MatchState, Trophy } from '../types/game';
 
 interface SaveSlot {
   id: number;
   name: string;
   date: string;
   gameData: any;
-}
-
-interface Trophy {
-  id: number;
-  name: string;
-  date: string;
-  competition: string;
-  imageUrl: string;
 }
 
 interface GameContextType {
@@ -32,7 +24,7 @@ interface GameContextType {
   matchEvents: MatchEvent[];
   setMatchEvents: (events: MatchEvent[]) => void;
   matchTime: number;
-  setMatchTime: (time: number | ((prev: number) => number)) => void;
+  setMatchTime: React.Dispatch<React.SetStateAction<number>>;
   isPaused: boolean;
   setIsPaused: (paused: boolean) => void;
   matchState: MatchState | null;

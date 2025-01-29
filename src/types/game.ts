@@ -53,3 +53,11 @@ export interface MatchState {
   currentMinute: number;
   isPlaying: boolean;
 }
+
+export interface Trophy {
+  id: number;
+  name: string;
+  date: string;
+  competition: string;
+  imageUrl: string;
+}
