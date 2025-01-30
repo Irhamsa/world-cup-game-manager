@@ -5,170 +5,7 @@ import { Button } from './ui/button';
 import { toast } from './ui/use-toast';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { motion } from 'framer-motion';
-
-const mockTeams: Team[] = [
-  // Top 10 FIFA Rankings
-  {
-    id: "1",
-    name: "Argentina",
-    flag: "/placeholder.svg",
-    players: [],
-    coach: {
-      id: "c1",
-      name: "Lionel Scaloni",
-      nationality: "Argentinian"
-    },
-    formation: "4-3-3",
-    rating: 88
-  },
-  {
-    id: "2",
-    name: "France",
-    flag: "/placeholder.svg",
-    players: [],
-    coach: {
-      id: "c2",
-      name: "Didier Deschamps",
-      nationality: "French"
-    },
-    formation: "4-2-3-1",
-    rating: 87
-  },
-  {
-    id: "3",
-    name: "England",
-    flag: "/placeholder.svg",
-    players: [],
-    coach: {
-      id: "c3",
-      name: "Gareth Southgate",
-      nationality: "English"
-    },
-    formation: "4-3-3",
-    rating: 86
-  },
-  {
-    id: "4",
-    name: "Belgium",
-    flag: "/placeholder.svg",
-    players: [],
-    coach: {
-      id: "c4",
-      name: "Domenico Tedesco",
-      nationality: "Italian"
-    },
-    formation: "4-3-3",
-    rating: 86
-  },
-  {
-    id: "5",
-    name: "Brazil",
-    flag: "/placeholder.svg",
-    players: [],
-    coach: {
-      id: "c5",
-      name: "Dorival Júnior",
-      nationality: "Brazilian"
-    },
-    formation: "4-3-3",
-    rating: 85
-  },
-  {
-    id: "6",
-    name: "Netherlands",
-    flag: "/placeholder.svg",
-    players: [],
-    coach: {
-      id: "c6",
-      name: "Ronald Koeman",
-      nationality: "Dutch"
-    },
-    formation: "4-3-3",
-    rating: 85
-  },
-  {
-    id: "7",
-    name: "Portugal",
-    flag: "/placeholder.svg",
-    players: [],
-    coach: {
-      id: "c7",
-      name: "Roberto Martínez",
-      nationality: "Spanish"
-    },
-    formation: "4-3-3",
-    rating: 85
-  },
-  {
-    id: "8",
-    name: "Spain",
-    flag: "/placeholder.svg",
-    players: [],
-    coach: {
-      id: "c8",
-      name: "Luis de la Fuente",
-      nationality: "Spanish"
-    },
-    formation: "4-3-3",
-    rating: 84
-  },
-  {
-    id: "9",
-    name: "Italy",
-    flag: "/placeholder.svg",
-    players: [],
-    coach: {
-      id: "c9",
-      name: "Luciano Spalletti",
-      nationality: "Italian"
-    },
-    formation: "4-3-3",
-    rating: 84
-  },
-  {
-    id: "10",
-    name: "Croatia",
-    flag: "/placeholder.svg",
-    players: [],
-    coach: {
-      id: "c10",
-      name: "Zlatko Dalić",
-      nationality: "Croatian"
-    },
-    formation: "4-3-3",
-    rating: 84
-  },
-  // More teams...
-  {
-    id: "11",
-    name: "Germany",
-    flag: "/placeholder.svg",
-    players: [],
-    coach: {
-      id: "c11",
-      name: "Julian Nagelsmann",
-      nationality: "German"
-    },
-    formation: "4-2-3-1",
-    rating: 83
-  },
-  // ... Additional 140 teams would follow the same pattern
-  // For brevity, I'm showing just the structure
-  // The complete implementation would include all 150 teams
-  {
-    id: "150",
-    name: "San Marino",
-    flag: "/placeholder.svg",
-    players: [],
-    coach: {
-      id: "c150",
-      name: "Fabrizio Costantini",
-      nationality: "Sammarinese"
-    },
-    formation: "5-4-1",
-    rating: 50
-  }
-];
+import { allTeams } from '../data/teams';
 
 const TeamSelection = () => {
   const { setSelectedTeams } = useGame();
@@ -180,7 +17,7 @@ const TeamSelection = () => {
     setSelectedIndex(newSelected);
 
     if (newSelected[0] !== -1 && newSelected[1] !== -1) {
-      setSelectedTeams([mockTeams[newSelected[0]], mockTeams[newSelected[1]]]);
+      setSelectedTeams([allTeams[newSelected[0]], allTeams[newSelected[1]]]);
       toast({
         title: "Teams Selected",
         description: "Ready to start the match!",
@@ -207,7 +44,7 @@ const TeamSelection = () => {
               {slot === 0 ? "Home Team" : "Away Team"}
             </h3>
             <div className="grid gap-4">
-              {mockTeams.map((team, index) => (
+              {allTeams.map((team, index) => (
                 <motion.div
                   key={team.id}
                   initial={{ opacity: 0, x: slot === 0 ? -20 : 20 }}
