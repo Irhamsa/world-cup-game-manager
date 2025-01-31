@@ -14,5 +14,18 @@ export const afcTeams: Team[] = [
     formation: "4-2-3-1",
     rating: 78
   },
-  // ... 46 tim AFC lainnya
+  {
+    id: "kor",
+    name: "South Korea",
+    flag: "/flags/kor.svg",
+    players: [],
+    coach: {
+      id: "c_kor",
+      name: "Jürgen Klinsmann",
+      nationality: "German"
+    },
+    formation: "4-3-3",
+    rating: 77
+  },
+  // ... 45 tim AFC lainnya
 ];

@@ -14,5 +14,18 @@ export const cafTeams: Team[] = [
     formation: "4-3-3",
     rating: 81
   },
-  // ... 53 tim CAF lainnya
+  {
+    id: "sen",
+    name: "Senegal",
+    flag: "/flags/sen.svg",
+    players: [],
+    coach: {
+      id: "c_sen",
+      name: "Aliou Cissé",
+      nationality: "Senegalese"
+    },
+    formation: "4-3-3",
+    rating: 79
+  },
+  // ... 52 tim CAF lainnya
 ];

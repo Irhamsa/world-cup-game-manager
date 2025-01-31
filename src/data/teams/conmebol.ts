@@ -14,5 +14,18 @@ export const conmebolTeams: Team[] = [
     formation: "4-3-3",
     rating: 88
   },
-  // ... 9 tim CONMEBOL lainnya
+  {
+    id: "bra",
+    name: "Brazil",
+    flag: "/flags/bra.svg",
+    players: [],
+    coach: {
+      id: "c_bra",
+      name: "Dorival Júnior",
+      nationality: "Brazilian"
+    },
+    formation: "4-3-3",
+    rating: 87
+  },
+  // ... 8 tim CONMEBOL lainnya
 ];

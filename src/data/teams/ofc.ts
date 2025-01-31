@@ -14,5 +14,18 @@ export const ofcTeams: Team[] = [
     formation: "4-4-2",
     rating: 72
   },
-  // ... 12 tim OFC lainnya
+  {
+    id: "tah",
+    name: "Tahiti",
+    flag: "/flags/tah.svg",
+    players: [],
+    coach: {
+      id: "c_tah",
+      name: "Samuel Garcia",
+      nationality: "French"
+    },
+    formation: "4-4-2",
+    rating: 65
+  },
+  // ... 11 tim OFC lainnya
 ];
