@@ -3,34 +3,45 @@ import { useGame } from '../contexts/GameContext';
 import { Team } from '../types/game';
 import { Button } from './ui/button';
 import { toast } from './ui/use-toast';
-import { ArrowLeft, ArrowRight } from 'lucide-react';
+import { Flag } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { ScrollArea } from './ui/scroll-area';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from './ui/select';
 import { allTeams, teamsByConfederation } from '../data/teams';
 
 const TeamSelection = () => {
   const { setSelectedTeams } = useGame();
-  const [selectedIndex, setSelectedIndex] = useState<[number, number]>([-1, -1]);
+  const [selectedTeamIds, setSelectedTeamIds] = useState<[string, string]>(['', '']);
   const [selectedConfederation, setSelectedConfederation] = useState<keyof typeof teamsByConfederation | 'ALL'>('ALL');
-
-  const handleTeamSelect = (teamIndex: number, slot: 0 | 1) => {
-    const newSelected = [...selectedIndex] as [number, number];
-    newSelected[slot] = teamIndex;
-    setSelectedIndex(newSelected);
-
-    if (newSelected[0] !== -1 && newSelected[1] !== -1) {
-      setSelectedTeams([allTeams[newSelected[0]], allTeams[newSelected[1]]]);
-      toast({
-        title: "Teams Selected",
-        description: "Ready to start the match!",
-        duration: 2000,
-      });
-    }
-  };
 
   const displayedTeams = selectedConfederation === 'ALL' 
     ? allTeams 
     : teamsByConfederation[selectedConfederation];
+
+  const handleTeamSelect = (teamId: string, slot: 0 | 1) => {
+    const newSelected = [...selectedTeamIds] as [string, string];
+    newSelected[slot] = teamId;
+    setSelectedTeamIds(newSelected);
+
+    if (newSelected[0] && newSelected[1]) {
+      const team1 = displayedTeams.find(t => t.id === newSelected[0]);
+      const team2 = displayedTeams.find(t => t.id === newSelected[1]);
+      
+      if (team1 && team2) {
+        setSelectedTeams([team1, team2]);
+        toast({
+          title: "Teams Selected",
+          description: "Ready to start the match!",
+          duration: 2000,
+        });
+      }
+    }
+  };
 
   return (
     <div className="p-6 space-y-8">
@@ -67,41 +78,48 @@ const TeamSelection = () => {
             <h3 className="text-xl font-semibold text-center">
               {slot === 0 ? "Home Team" : "Away Team"}
             </h3>
-            <ScrollArea className="h-[600px]">
-              <div className="grid gap-4 pr-4">
-                {displayedTeams.map((team, index) => (
-                  <motion.div
+            <Select
+              value={selectedTeamIds[slot]}
+              onValueChange={(value) => handleTeamSelect(value, slot as 0 | 1)}
+            >
+              <SelectTrigger className="w-full">
+                <SelectValue placeholder="Select a team">
+                  {selectedTeamIds[slot] && (
+                    <div className="flex items-center gap-2">
+                      <img
+                        src={displayedTeams.find(t => t.id === selectedTeamIds[slot])?.flag}
+                        alt="flag"
+                        className="w-6 h-6 object-cover rounded"
+                      />
+                      <span>
+                        {displayedTeams.find(t => t.id === selectedTeamIds[slot])?.name}
+                      </span>
+                    </div>
+                  )}
+                </SelectValue>
+              </SelectTrigger>
+              <SelectContent>
+                {displayedTeams.map((team) => (
+                  <SelectItem
                     key={team.id}
-                    initial={{ opacity: 0, x: slot === 0 ? -20 : 20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: index * 0.05 }}
+                    value={team.id}
+                    disabled={selectedTeamIds[slot === 0 ? 1 : 0] === team.id}
                   >
-                    <Button
-                      variant={selectedIndex[slot] === index ? "default" : "secondary"}
-                      className="w-full justify-between p-4"
-                      onClick={() => handleTeamSelect(index, slot as 0 | 1)}
-                      disabled={selectedIndex[slot === 0 ? 1 : 0] === index}
-                    >
-                      <div className="flex items-center gap-4">
-                        <img 
-                          src={team.flag} 
-                          alt={`${team.name} flag`}
-                          className="w-8 h-8 object-cover rounded"
-                        />
-                        <div className="text-left">
-                          <div className="font-semibold">{team.name}</div>
-                          <div className="text-sm text-muted-foreground">
-                            <span>Rating: {team.rating}</span>
-                            <span className="ml-2">Formation: {team.formation}</span>
-                          </div>
-                        </div>
-                      </div>
-                      {slot === 0 ? <ArrowRight className="ml-2" /> : <ArrowLeft className="ml-2" />}
-                    </Button>
-                  </motion.div>
+                    <div className="flex items-center gap-2">
+                      <img
+                        src={team.flag}
+                        alt={`${team.name} flag`}
+                        className="w-6 h-6 object-cover rounded"
+                      />
+                      <span>{team.name}</span>
+                      <span className="text-muted-foreground ml-2">
+                        ({team.rating})
+                      </span>
+                    </div>
+                  </SelectItem>
                 ))}
-              </div>
-            </ScrollArea>
+              </SelectContent>
+            </Select>
           </div>
         ))}
       </div>
