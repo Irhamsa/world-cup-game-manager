@@ -195,5 +195,200 @@ export const afcTeams: Team[] = [
     },
     formation: "4-2-3-1",
     rating: 64
+  },
+  {
+    id: "mys",
+    name: "Malaysia",
+    flag: "/flags/mys.svg",
+    players: [],
+    coach: {
+      id: "c_mys",
+      name: "Kim Pan-gon",
+      nationality: "South Korean"
+    },
+    formation: "4-3-3",
+    rating: 63
+  },
+  {
+    id: "idn",
+    name: "Indonesia",
+    flag: "/flags/idn.svg",
+    players: [],
+    coach: {
+      id: "c_idn",
+      name: "Shin Tae-yong",
+      nationality: "South Korean"
+    },
+    formation: "4-3-3",
+    rating: 62
+  },
+  {
+    id: "phl",
+    name: "Philippines",
+    flag: "/flags/phl.svg",
+    players: [],
+    coach: {
+      id: "c_phl",
+      name: "Michael Weiss",
+      nationality: "German"
+    },
+    formation: "4-4-2",
+    rating: 61
+  },
+  {
+    id: "mmr",
+    name: "Myanmar",
+    flag: "/flags/mmr.svg",
+    players: [],
+    coach: {
+      id: "c_mmr",
+      name: "Michael Feichtenbeiner",
+      nationality: "German"
+    },
+    formation: "4-2-3-1",
+    rating: 60
+  },
+  {
+    id: "sgp",
+    name: "Singapore",
+    flag: "/flags/sgp.svg",
+    players: [],
+    coach: {
+      id: "c_sgp",
+      name: "Takayuki Nishigaya",
+      nationality: "Japanese"
+    },
+    formation: "4-3-3",
+    rating: 59
+  },
+  {
+    id: "hkg",
+    name: "Hong Kong",
+    flag: "/flags/hkg.svg",
+    players: [],
+    coach: {
+      id: "c_hkg",
+      name: "Jorn Andersen",
+      nationality: "Norwegian"
+    },
+    formation: "4-4-2",
+    rating: 58
+  },
+  {
+    id: "prk",
+    name: "North Korea",
+    flag: "/flags/prk.svg",
+    players: [],
+    coach: {
+      id: "c_prk",
+      name: "Sin Yong-nam",
+      nationality: "North Korean"
+    },
+    formation: "4-4-2",
+    rating: 57
+  },
+  {
+    id: "yem",
+    name: "Yemen",
+    flag: "/flags/yem.svg",
+    players: [],
+    coach: {
+      id: "c_yem",
+      name: "Miroslav Soukup",
+      nationality: "Czech"
+    },
+    formation: "4-5-1",
+    rating: 56
+  },
+  {
+    id: "twn",
+    name: "Chinese Taipei",
+    flag: "/flags/twn.svg",
+    players: [],
+    coach: {
+      id: "c_twn",
+      name: "Vom Ca-nhum",
+      nationality: "Taiwanese"
+    },
+    formation: "4-4-2",
+    rating: 55
+  },
+  {
+    id: "khm",
+    name: "Cambodia",
+    flag: "/flags/khm.svg",
+    players: [],
+    coach: {
+      id: "c_khm",
+      name: "Ryu Hirose",
+      nationality: "Japanese"
+    },
+    formation: "4-3-3",
+    rating: 54
+  },
+  {
+    id: "mac",
+    name: "Macau",
+    flag: "/flags/mac.svg",
+    players: [],
+    coach: {
+      id: "c_mac",
+      name: "Lázaro Oliveira",
+      nationality: "Portuguese"
+    },
+    formation: "4-4-2",
+    rating: 53
+  },
+  {
+    id: "lao",
+    name: "Laos",
+    flag: "/flags/lao.svg",
+    players: [],
+    coach: {
+      id: "c_lao",
+      name: "Michael Weiss",
+      nationality: "German"
+    },
+    formation: "4-4-2",
+    rating: 52
+  },
+  {
+    id: "brn",
+    name: "Brunei",
+    flag: "/flags/brn.svg",
+    players: [],
+    coach: {
+      id: "c_brn",
+      name: "Mario Rivera",
+      nationality: "Spanish"
+    },
+    formation: "4-4-2",
+    rating: 51
+  },
+  {
+    id: "tls",
+    name: "Timor-Leste",
+    flag: "/flags/tls.svg",
+    players: [],
+    coach: {
+      id: "c_tls",
+      name: "Fabio Maciel",
+      nationality: "Brazilian"
+    },
+    formation: "4-4-2",
+    rating: 50
+  },
+  {
+    id: "mng",
+    name: "Mongolia",
+    flag: "/flags/mng.svg",
+    players: [],
+    coach: {
+      id: "c_mng",
+      name: "Ichiro Otsuka",
+      nationality: "Japanese"
+    },
+    formation: "4-4-2",
+    rating: 49
   }
 ];
