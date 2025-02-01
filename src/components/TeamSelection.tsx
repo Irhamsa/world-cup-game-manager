@@ -3,21 +3,17 @@ import { useGame } from '../contexts/GameContext';
 import { Team } from '../types/game';
 import { Button } from './ui/button';
 import { toast } from './ui/use-toast';
-import { Flag, Check } from 'lucide-react';
+import { Check, ChevronDown } from 'lucide-react';
 import { motion } from 'framer-motion';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from './ui/select';
+import { ScrollArea } from './ui/scroll-area';
 import { allTeams, teamsByConfederation } from '../data/teams';
 
 const TeamSelection = () => {
   const { setSelectedTeams } = useGame();
   const [selectedTeamIds, setSelectedTeamIds] = useState<[string, string]>(['', '']);
   const [selectedConfederation, setSelectedConfederation] = useState<keyof typeof teamsByConfederation | 'ALL'>('ALL');
+  const [isConfedDropdownOpen, setIsConfedDropdownOpen] = useState(false);
+  const [activeDropdown, setActiveDropdown] = useState<null | 0 | 1>(null);
 
   const displayedTeams = selectedConfederation === 'ALL' 
     ? allTeams 
@@ -27,6 +23,7 @@ const TeamSelection = () => {
     const newSelected = [...selectedTeamIds] as [string, string];
     newSelected[slot] = teamId;
     setSelectedTeamIds(newSelected);
+    setActiveDropdown(null);
   };
 
   const handleConfirm = () => {
@@ -51,6 +48,35 @@ const TeamSelection = () => {
     }
   };
 
+  const CustomDropdown = ({ 
+    label, 
+    isOpen, 
+    onToggle, 
+    children 
+  }: { 
+    label: string;
+    isOpen: boolean;
+    onToggle: () => void;
+    children: React.ReactNode;
+  }) => (
+    <div className="relative">
+      <button
+        onClick={onToggle}
+        className="w-full flex items-center justify-between p-3 bg-secondary rounded-md border border-border"
+      >
+        <span>{label}</span>
+        <ChevronDown className={`w-4 h-4 transition-transform ${isOpen ? 'transform rotate-180' : ''}`} />
+      </button>
+      {isOpen && (
+        <div className="absolute z-50 w-full mt-1 bg-background border border-border rounded-md shadow-lg">
+          <ScrollArea className="h-48">
+            {children}
+          </ScrollArea>
+        </div>
+      )}
+    </div>
+  );
+
   return (
     <div className="p-6 space-y-8">
       <motion.div 
@@ -65,30 +91,35 @@ const TeamSelection = () => {
       <div className="max-w-md mx-auto space-y-6">
         <div className="space-y-2">
           <label className="text-sm font-medium">Confederation</label>
-          <Select
-            value={selectedConfederation}
-            onValueChange={(value) => setSelectedConfederation(value as keyof typeof teamsByConfederation | 'ALL')}
+          <CustomDropdown
+            label={selectedConfederation}
+            isOpen={isConfedDropdownOpen}
+            onToggle={() => setIsConfedDropdownOpen(!isConfedDropdownOpen)}
           >
-            <SelectTrigger className="w-full bg-secondary">
-              <SelectValue placeholder="Select confederation">
-                {selectedConfederation}
-              </SelectValue>
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="ALL" className="bg-gray-100 hover:bg-gray-200">
+            <div className="p-1">
+              <button
+                onClick={() => {
+                  setSelectedConfederation('ALL');
+                  setIsConfedDropdownOpen(false);
+                }}
+                className="w-full text-left px-3 py-2 hover:bg-accent rounded-sm"
+              >
                 All Teams
-              </SelectItem>
+              </button>
               {Object.keys(teamsByConfederation).map((conf) => (
-                <SelectItem 
-                  key={conf} 
-                  value={conf}
-                  className="bg-gray-100 hover:bg-gray-200"
+                <button
+                  key={conf}
+                  onClick={() => {
+                    setSelectedConfederation(conf as keyof typeof teamsByConfederation);
+                    setIsConfedDropdownOpen(false);
+                  }}
+                  className="w-full text-left px-3 py-2 hover:bg-accent rounded-sm"
                 >
                   {conf}
-                </SelectItem>
+                </button>
               ))}
-            </SelectContent>
-          </Select>
+            </div>
+          </CustomDropdown>
         </div>
 
         <div className="space-y-4">
@@ -97,49 +128,37 @@ const TeamSelection = () => {
               <label className="text-sm font-medium">
                 {slot === 0 ? "Home Team" : "Away Team"}
               </label>
-              <Select
-                value={selectedTeamIds[slot]}
-                onValueChange={(value) => handleTeamSelect(value, slot as 0 | 1)}
+              <CustomDropdown
+                label={selectedTeamIds[slot] 
+                  ? displayedTeams.find(t => t.id === selectedTeamIds[slot])?.name || 'Select a team'
+                  : 'Select a team'
+                }
+                isOpen={activeDropdown === slot}
+                onToggle={() => setActiveDropdown(activeDropdown === slot ? null : slot)}
               >
-                <SelectTrigger className="w-full bg-primary/5">
-                  <SelectValue placeholder="Select a team">
-                    {selectedTeamIds[slot] && (
-                      <div className="flex items-center gap-2">
-                        <img
-                          src={displayedTeams.find(t => t.id === selectedTeamIds[slot])?.flag}
-                          alt="flag"
-                          className="w-6 h-6 object-cover rounded"
-                        />
-                        <span>
-                          {displayedTeams.find(t => t.id === selectedTeamIds[slot])?.name}
-                        </span>
-                      </div>
-                    )}
-                  </SelectValue>
-                </SelectTrigger>
-                <SelectContent>
+                <div className="p-1">
                   {displayedTeams.map((team) => (
-                    <SelectItem
+                    <button
                       key={team.id}
-                      value={team.id}
+                      onClick={() => handleTeamSelect(team.id, slot)}
                       disabled={selectedTeamIds[slot === 0 ? 1 : 0] === team.id}
-                      className="bg-gray-100 hover:bg-gray-200"
+                      className={`w-full flex items-center gap-2 px-3 py-2 hover:bg-accent rounded-sm ${
+                        selectedTeamIds[slot === 0 ? 1 : 0] === team.id ? 'opacity-50 cursor-not-allowed' : ''
+                      }`}
                     >
-                      <div className="flex items-center gap-2">
-                        <img
-                          src={team.flag}
-                          alt={`${team.name} flag`}
-                          className="w-6 h-6 object-cover rounded"
-                        />
-                        <span>{team.name}</span>
-                        <span className="text-muted-foreground ml-2">
-                          ({team.rating})
-                        </span>
-                      </div>
-                    </SelectItem>
+                      <img
+                        src={team.flag}
+                        alt={`${team.name} flag`}
+                        className="w-6 h-6 object-cover rounded"
+                      />
+                      <span>{team.name}</span>
+                      <span className="text-muted-foreground ml-2">
+                        ({team.rating})
+                      </span>
+                    </button>
                   ))}
-                </SelectContent>
-              </Select>
+                </div>
+              </CustomDropdown>
             </div>
           ))}
         </div>
