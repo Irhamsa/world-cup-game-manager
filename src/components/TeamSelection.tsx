@@ -123,7 +123,7 @@ const TeamSelection = () => {
         </div>
 
         <div className="space-y-4">
-          {[0, 1].map((slot) => (
+          {([0, 1] as const).map((slot) => (
             <div key={slot} className="space-y-2">
               <label className="text-sm font-medium">
                 {slot === 0 ? "Home Team" : "Away Team"}
