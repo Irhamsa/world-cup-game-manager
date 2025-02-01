@@ -390,5 +390,57 @@ export const afcTeams: Team[] = [
     },
     formation: "4-4-2",
     rating: 49
+  },
+  {
+    id: "jor",
+    name: "Jordan",
+    flag: "/flags/jor.svg",
+    players: [],
+    coach: {
+      id: "c_jor",
+      name: "Hussein Ammouta",
+      nationality: "Moroccan"
+    },
+    formation: "4-3-3",
+    rating: 75
+  },
+  {
+    id: "pse",
+    name: "Palestine",
+    flag: "/flags/pse.svg",
+    players: [],
+    coach: {
+      id: "c_pse",
+      name: "Makram Daboub",
+      nationality: "Tunisian"
+    },
+    formation: "4-4-2",
+    rating: 73
+  },
+  {
+    id: "kwt",
+    name: "Kuwait",
+    flag: "/flags/kwt.svg",
+    players: [],
+    coach: {
+      id: "c_kwt",
+      name: "Rui Bento",
+      nationality: "Portuguese"
+    },
+    formation: "4-2-3-1",
+    rating: 72
+  },
+  {
+    id: "bhr",
+    name: "Bahrain",
+    flag: "/flags/bhr.svg",
+    players: [],
+    coach: {
+      id: "c_bhr",
+      name: "Juan Antonio Pizzi",
+      nationality: "Spanish"
+    },
+    formation: "4-3-3",
+    rating: 71
   }
 ];
