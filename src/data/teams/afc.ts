@@ -131,7 +131,113 @@ export const afcTeams: Team[] = [
     id: "kor",
     name: "South Korea",
     flag: "/flags/kor.svg",
-    players: [],
+    players: [
+      {
+        id: "kor_1",
+        name: "Kim Seung-gyu",
+        position: "GK",
+        rating: 77,
+        isSubstitute: false
+      },
+      {
+        id: "kor_2",
+        name: "Kim Min-jae",
+        position: "DEF",
+        rating: 86,
+        isSubstitute: false
+      },
+      {
+        id: "kor_3",
+        name: "Kim Jin-su",
+        position: "DEF",
+        rating: 77,
+        isSubstitute: false
+      },
+      {
+        id: "kor_4",
+        name: "Kim Young-gwon",
+        position: "DEF",
+        rating: 75,
+        isSubstitute: false
+      },
+      {
+        id: "kor_5",
+        name: "Lee Ki-je",
+        position: "DEF",
+        rating: 74,
+        isSubstitute: false
+      },
+      {
+        id: "kor_6",
+        name: "Hwang In-beom",
+        position: "MID",
+        rating: 77,
+        isSubstitute: false
+      },
+      {
+        id: "kor_7",
+        name: "Son Heung-min",
+        position: "MID",
+        rating: 87,
+        isSubstitute: false
+      },
+      {
+        id: "kor_8",
+        name: "Lee Jae-sung",
+        position: "MID",
+        rating: 75,
+        isSubstitute: false
+      },
+      {
+        id: "kor_9",
+        name: "Hwang Hee-chan",
+        position: "MID",
+        rating: 80,
+        isSubstitute: false
+      },
+      {
+        id: "kor_10",
+        name: "Cho Gue-sung",
+        position: "FWD",
+        rating: 75,
+        isSubstitute: false
+      },
+      {
+        id: "kor_11",
+        name: "Lee Kang-in",
+        position: "FWD",
+        rating: 81,
+        isSubstitute: false
+      },
+      {
+        id: "kor_12",
+        name: "Jo Hyeon-woo",
+        position: "GK",
+        rating: 76,
+        isSubstitute: true
+      },
+      {
+        id: "kor_13",
+        name: "Jung Seung-hyun",
+        position: "DEF",
+        rating: 73,
+        isSubstitute: true
+      },
+      {
+        id: "kor_14",
+        name: "Park Yong-woo",
+        position: "MID",
+        rating: 74,
+        isSubstitute: true
+      },
+      {
+        id: "kor_15",
+        name: "Oh Hyeon-gyu",
+        position: "FWD",
+        rating: 73,
+        isSubstitute: true
+      }
+    ],
     coach: {
       id: "c_kor",
       name: "Jürgen Klinsmann",
@@ -144,7 +250,113 @@ export const afcTeams: Team[] = [
     id: "aus",
     name: "Australia",
     flag: "/flags/aus.svg",
-    players: [],
+    players: [
+      {
+        id: "aus_1",
+        name: "Mathew Ryan",
+        position: "GK",
+        rating: 78,
+        isSubstitute: false
+      },
+      {
+        id: "aus_2",
+        name: "Harry Souttar",
+        position: "DEF",
+        rating: 76,
+        isSubstitute: false
+      },
+      {
+        id: "aus_3",
+        name: "Aziz Behich",
+        position: "DEF",
+        rating: 74,
+        isSubstitute: false
+      },
+      {
+        id: "aus_4",
+        name: "Kye Rowles",
+        position: "DEF",
+        rating: 73,
+        isSubstitute: false
+      },
+      {
+        id: "aus_5",
+        name: "Nathaniel Atkinson",
+        position: "DEF",
+        rating: 72,
+        isSubstitute: false
+      },
+      {
+        id: "aus_6",
+        name: "Aaron Mooy",
+        position: "MID",
+        rating: 75,
+        isSubstitute: false
+      },
+      {
+        id: "aus_7",
+        name: "Ajdin Hrustic",
+        position: "MID",
+        rating: 74,
+        isSubstitute: false
+      },
+      {
+        id: "aus_8",
+        name: "Jackson Irvine",
+        position: "MID",
+        rating: 73,
+        isSubstitute: false
+      },
+      {
+        id: "aus_9",
+        name: "Mathew Leckie",
+        position: "MID",
+        rating: 74,
+        isSubstitute: false
+      },
+      {
+        id: "aus_10",
+        name: "Mitchell Duke",
+        position: "FWD",
+        rating: 73,
+        isSubstitute: false
+      },
+      {
+        id: "aus_11",
+        name: "Craig Goodwin",
+        position: "FWD",
+        rating: 74,
+        isSubstitute: false
+      },
+      {
+        id: "aus_12",
+        name: "Andrew Redmayne",
+        position: "GK",
+        rating: 72,
+        isSubstitute: true
+      },
+      {
+        id: "aus_13",
+        name: "Bailey Wright",
+        position: "DEF",
+        rating: 71,
+        isSubstitute: true
+      },
+      {
+        id: "aus_14",
+        name: "Riley McGree",
+        position: "MID",
+        rating: 73,
+        isSubstitute: true
+      },
+      {
+        id: "aus_15",
+        name: "Jamie Maclaren",
+        position: "FWD",
+        rating: 74,
+        isSubstitute: true
+      }
+    ],
     coach: {
       id: "c_aus",
       name: "Graham Arnold",
