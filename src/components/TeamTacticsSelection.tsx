@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Team } from '../types/game';
 import { Button } from './ui/button';
 import { ScrollArea } from './ui/scroll-area';
+import { Play } from 'lucide-react';
 import { 
   Select,
   SelectContent,
@@ -9,6 +10,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "./ui/select";
+import { toast } from './ui/use-toast';
 
 interface TeamTacticsSelectionProps {
   team: Team;
@@ -22,6 +24,18 @@ const TeamTacticsSelection = ({ team, onConfirm }: TeamTacticsSelectionProps) =>
   );
 
   const formations = ['4-4-2', '4-3-3', '4-2-3-1', '3-5-2', '5-3-2'];
+
+  const handleStartMatch = () => {
+    if (startingLineup.length !== 11) {
+      toast({
+        title: "Invalid Lineup",
+        description: "Please select exactly 11 players for the starting lineup",
+        variant: "destructive",
+      });
+      return;
+    }
+    onConfirm(selectedFormation, startingLineup);
+  };
 
   return (
     <div className="p-4 space-y-4">
@@ -58,6 +72,12 @@ const TeamTacticsSelection = ({ team, onConfirm }: TeamTacticsSelectionProps) =>
                   if (e.target.checked) {
                     if (startingLineup.length < 11) {
                       setStartingLineup([...startingLineup, player.id]);
+                    } else {
+                      toast({
+                        title: "Maximum Players Reached",
+                        description: "You can only select 11 players for the starting lineup",
+                        variant: "destructive",
+                      });
                     }
                   } else {
                     setStartingLineup(startingLineup.filter(id => id !== player.id));
@@ -75,11 +95,12 @@ const TeamTacticsSelection = ({ team, onConfirm }: TeamTacticsSelectionProps) =>
       </div>
 
       <Button 
-        onClick={() => onConfirm(selectedFormation, startingLineup)}
+        onClick={handleStartMatch}
         disabled={startingLineup.length !== 11}
         className="w-full"
       >
-        Confirm Tactics
+        <Play className="w-4 h-4 mr-2" />
+        Start Match
       </Button>
     </div>
   );

@@ -5,7 +5,120 @@ export const afcTeams: Team[] = [
     id: "jpn",
     name: "Japan",
     flag: "/flags/jpn.svg",
-    players: [],
+    players: [
+      {
+        id: "jpn_1",
+        name: "Zion Suzuki",
+        position: "GK",
+        rating: 78,
+        isSubstitute: false
+      },
+      {
+        id: "jpn_2",
+        name: "Takehiro Tomiyasu",
+        position: "DEF",
+        rating: 82,
+        isSubstitute: false
+      },
+      {
+        id: "jpn_3",
+        name: "Ko Itakura",
+        position: "DEF",
+        rating: 79,
+        isSubstitute: false
+      },
+      {
+        id: "jpn_4",
+        name: "Yuta Nakayama",
+        position: "DEF",
+        rating: 77,
+        isSubstitute: false
+      },
+      {
+        id: "jpn_5",
+        name: "Yukinari Sugawara",
+        position: "DEF",
+        rating: 76,
+        isSubstitute: false
+      },
+      {
+        id: "jpn_6",
+        name: "Wataru Endo",
+        position: "MID",
+        rating: 83,
+        isSubstitute: false
+      },
+      {
+        id: "jpn_7",
+        name: "Junya Ito",
+        position: "MID",
+        rating: 81,
+        isSubstitute: false
+      },
+      {
+        id: "jpn_8",
+        name: "Takefusa Kubo",
+        position: "MID",
+        rating: 84,
+        isSubstitute: false
+      },
+      {
+        id: "jpn_9",
+        name: "Kaoru Mitoma",
+        position: "MID",
+        rating: 85,
+        isSubstitute: false
+      },
+      {
+        id: "jpn_10",
+        name: "Ayase Ueda",
+        position: "FWD",
+        rating: 79,
+        isSubstitute: false
+      },
+      {
+        id: "jpn_11",
+        name: "Kyogo Furuhashi",
+        position: "FWD",
+        rating: 80,
+        isSubstitute: false
+      },
+      {
+        id: "jpn_12",
+        name: "Daizen Maeda",
+        position: "FWD",
+        rating: 78,
+        isSubstitute: true
+      },
+      {
+        id: "jpn_13",
+        name: "Ritsu Doan",
+        position: "MID",
+        rating: 80,
+        isSubstitute: true
+      },
+      {
+        id: "jpn_14",
+        name: "Hidemasa Morita",
+        position: "MID",
+        rating: 78,
+        isSubstitute: true
+      },
+      {
+        id: "jpn_15",
+        name: "Ao Tanaka",
+        position: "MID",
+        rating: 77,
+        isSubstitute: true
+      },
+      {
+        id: "jpn_16",
+        name: "Shogo Taniguchi",
+        position: "DEF",
+        rating: 76,
+        isSubstitute: true
+      }
+    ],
     coach: {
       id: "c_jpn",
       name: "Hajime Moriyasu",
