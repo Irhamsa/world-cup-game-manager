@@ -1,5 +1,48 @@
 import { Team } from '../../types/game';
 
+const generateAbilities = (position: 'GK' | 'DEF' | 'MID' | 'FWD', rating: number) => {
+  const baseValue = Math.floor(rating * 0.7);
+  
+  switch (position) {
+    case 'GK':
+      return {
+        pace: baseValue - 20,
+        shooting: baseValue - 30,
+        passing: baseValue - 10,
+        dribbling: baseValue - 25,
+        defending: baseValue + 25,
+        physical: baseValue + 5
+      };
+    case 'DEF':
+      return {
+        pace: baseValue,
+        shooting: baseValue - 15,
+        passing: baseValue - 5,
+        dribbling: baseValue - 10,
+        defending: baseValue + 15,
+        physical: baseValue + 10
+      };
+    case 'MID':
+      return {
+        pace: baseValue - 5,
+        shooting: baseValue,
+        passing: baseValue + 10,
+        dribbling: baseValue + 5,
+        defending: baseValue,
+        physical: baseValue - 5
+      };
+    case 'FWD':
+      return {
+        pace: baseValue + 10,
+        shooting: baseValue + 15,
+        passing: baseValue - 5,
+        dribbling: baseValue + 10,
+        defending: baseValue - 20,
+        physical: baseValue
+      };
+  }
+};
+
 export const afcTeams: Team[] = [
   {
     id: "jpn",
@@ -11,112 +54,128 @@ export const afcTeams: Team[] = [
         name: "Zion Suzuki",
         position: "GK",
         rating: 78,
-        isSubstitute: false
+        isSubstitute: false,
+        abilities: generateAbilities("GK", 78)
       },
       {
         id: "jpn_2",
         name: "Takehiro Tomiyasu",
         position: "DEF",
         rating: 82,
-        isSubstitute: false
+        isSubstitute: false,
+        abilities: generateAbilities("DEF", 82)
       },
       {
         id: "jpn_3",
         name: "Ko Itakura",
         position: "DEF",
         rating: 79,
-        isSubstitute: false
+        isSubstitute: false,
+        abilities: generateAbilities("DEF", 79)
       },
       {
         id: "jpn_4",
         name: "Yuta Nakayama",
         position: "DEF",
         rating: 77,
-        isSubstitute: false
+        isSubstitute: false,
+        abilities: generateAbilities("DEF", 77)
       },
       {
         id: "jpn_5",
         name: "Yukinari Sugawara",
         position: "DEF",
         rating: 76,
-        isSubstitute: false
+        isSubstitute: false,
+        abilities: generateAbilities("DEF", 76)
       },
       {
         id: "jpn_6",
         name: "Wataru Endo",
         position: "MID",
         rating: 83,
-        isSubstitute: false
+        isSubstitute: false,
+        abilities: generateAbilities("MID", 83)
       },
       {
         id: "jpn_7",
         name: "Junya Ito",
         position: "MID",
         rating: 81,
-        isSubstitute: false
+        isSubstitute: false,
+        abilities: generateAbilities("MID", 81)
       },
       {
         id: "jpn_8",
         name: "Takefusa Kubo",
         position: "MID",
         rating: 84,
-        isSubstitute: false
+        isSubstitute: false,
+        abilities: generateAbilities("MID", 84)
       },
       {
         id: "jpn_9",
         name: "Kaoru Mitoma",
         position: "MID",
         rating: 85,
-        isSubstitute: false
+        isSubstitute: false,
+        abilities: generateAbilities("MID", 85)
       },
       {
         id: "jpn_10",
         name: "Ayase Ueda",
         position: "FWD",
         rating: 79,
-        isSubstitute: false
+        isSubstitute: false,
+        abilities: generateAbilities("FWD", 79)
       },
       {
         id: "jpn_11",
         name: "Kyogo Furuhashi",
         position: "FWD",
         rating: 80,
-        isSubstitute: false
+        isSubstitute: false,
+        abilities: generateAbilities("FWD", 80)
       },
       {
         id: "jpn_12",
         name: "Daizen Maeda",
         position: "FWD",
         rating: 78,
-        isSubstitute: true
+        isSubstitute: true,
+        abilities: generateAbilities("FWD", 78)
       },
       {
         id: "jpn_13",
         name: "Ritsu Doan",
         position: "MID",
         rating: 80,
-        isSubstitute: true
+        isSubstitute: true,
+        abilities: generateAbilities("MID", 80)
       },
       {
         id: "jpn_14",
         name: "Hidemasa Morita",
         position: "MID",
         rating: 78,
-        isSubstitute: true
+        isSubstitute: true,
+        abilities: generateAbilities("MID", 78)
       },
       {
         id: "jpn_15",
         name: "Ao Tanaka",
         position: "MID",
         rating: 77,
-        isSubstitute: true
+        isSubstitute: true,
+        abilities: generateAbilities("MID", 77)
       },
       {
         id: "jpn_16",
         name: "Shogo Taniguchi",
         position: "DEF",
         rating: 76,
-        isSubstitute: true
+        isSubstitute: true,
+        abilities: generateAbilities("DEF", 76)
       }
     ],
     coach: {
@@ -137,105 +196,120 @@ export const afcTeams: Team[] = [
         name: "Kim Seung-gyu",
         position: "GK",
         rating: 77,
-        isSubstitute: false
+        isSubstitute: false,
+        abilities: generateAbilities("GK", 77)
       },
       {
         id: "kor_2",
         name: "Kim Min-jae",
         position: "DEF",
         rating: 86,
-        isSubstitute: false
+        isSubstitute: false,
+        abilities: generateAbilities("DEF", 86)
       },
       {
         id: "kor_3",
         name: "Kim Jin-su",
         position: "DEF",
         rating: 77,
-        isSubstitute: false
+        isSubstitute: false,
+        abilities: generateAbilities("DEF", 77)
       },
       {
         id: "kor_4",
         name: "Kim Young-gwon",
         position: "DEF",
         rating: 75,
-        isSubstitute: false
+        isSubstitute: false,
+        abilities: generateAbilities("DEF", 75)
       },
       {
         id: "kor_5",
         name: "Lee Ki-je",
         position: "DEF",
         rating: 74,
-        isSubstitute: false
+        isSubstitute: false,
+        abilities: generateAbilities("DEF", 74)
       },
       {
         id: "kor_6",
         name: "Hwang In-beom",
         position: "MID",
         rating: 77,
-        isSubstitute: false
+        isSubstitute: false,
+        abilities: generateAbilities("MID", 77)
       },
       {
         id: "kor_7",
         name: "Son Heung-min",
         position: "MID",
         rating: 87,
-        isSubstitute: false
+        isSubstitute: false,
+        abilities: generateAbilities("MID", 87)
       },
       {
         id: "kor_8",
         name: "Lee Jae-sung",
         position: "MID",
         rating: 75,
-        isSubstitute: false
+        isSubstitute: false,
+        abilities: generateAbilities("MID", 75)
       },
       {
         id: "kor_9",
         name: "Hwang Hee-chan",
         position: "MID",
         rating: 80,
-        isSubstitute: false
+        isSubstitute: false,
+        abilities: generateAbilities("MID", 80)
       },
       {
         id: "kor_10",
         name: "Cho Gue-sung",
         position: "FWD",
         rating: 75,
-        isSubstitute: false
+        isSubstitute: false,
+        abilities: generateAbilities("FWD", 75)
       },
       {
         id: "kor_11",
         name: "Lee Kang-in",
         position: "FWD",
         rating: 81,
-        isSubstitute: false
+        isSubstitute: false,
+        abilities: generateAbilities("FWD", 81)
       },
       {
         id: "kor_12",
         name: "Jo Hyeon-woo",
         position: "GK",
         rating: 76,
-        isSubstitute: true
+        isSubstitute: true,
+        abilities: generateAbilities("GK", 76)
       },
       {
         id: "kor_13",
         name: "Jung Seung-hyun",
         position: "DEF",
         rating: 73,
-        isSubstitute: true
+        isSubstitute: true,
+        abilities: generateAbilities("DEF", 73)
       },
       {
         id: "kor_14",
         name: "Park Yong-woo",
         position: "MID",
         rating: 74,
-        isSubstitute: true
+        isSubstitute: true,
+        abilities: generateAbilities("MID", 74)
       },
       {
         id: "kor_15",
         name: "Oh Hyeon-gyu",
         position: "FWD",
         rating: 73,
-        isSubstitute: true
+        isSubstitute: true,
+        abilities: generateAbilities("FWD", 73)
       }
     ],
     coach: {
@@ -256,105 +330,120 @@ export const afcTeams: Team[] = [
         name: "Mathew Ryan",
         position: "GK",
         rating: 78,
-        isSubstitute: false
+        isSubstitute: false,
+        abilities: generateAbilities("GK", 78)
       },
       {
         id: "aus_2",
         name: "Harry Souttar",
         position: "DEF",
         rating: 76,
-        isSubstitute: false
+        isSubstitute: false,
+        abilities: generateAbilities("DEF", 76)
       },
       {
         id: "aus_3",
         name: "Aziz Behich",
         position: "DEF",
         rating: 74,
-        isSubstitute: false
+        isSubstitute: false,
+        abilities: generateAbilities("DEF", 74)
       },
       {
         id: "aus_4",
         name: "Kye Rowles",
         position: "DEF",
         rating: 73,
-        isSubstitute: false
+        isSubstitute: false,
+        abilities: generateAbilities("DEF", 73)
       },
       {
         id: "aus_5",
         name: "Nathaniel Atkinson",
         position: "DEF",
         rating: 72,
-        isSubstitute: false
+        isSubstitute: false,
+        abilities: generateAbilities("DEF", 72)
       },
       {
         id: "aus_6",
         name: "Aaron Mooy",
         position: "MID",
         rating: 75,
-        isSubstitute: false
+        isSubstitute: false,
+        abilities: generateAbilities("MID", 75)
       },
       {
         id: "aus_7",
         name: "Ajdin Hrustic",
         position: "MID",
         rating: 74,
-        isSubstitute: false
+        isSubstitute: false,
+        abilities: generateAbilities("MID", 74)
       },
       {
         id: "aus_8",
         name: "Jackson Irvine",
         position: "MID",
         rating: 73,
-        isSubstitute: false
+        isSubstitute: false,
+        abilities: generateAbilities("MID", 73)
       },
       {
         id: "aus_9",
         name: "Mathew Leckie",
         position: "MID",
         rating: 74,
-        isSubstitute: false
+        isSubstitute: false,
+        abilities: generateAbilities("MID", 74)
       },
       {
         id: "aus_10",
         name: "Mitchell Duke",
         position: "FWD",
         rating: 73,
-        isSubstitute: false
+        isSubstitute: false,
+        abilities: generateAbilities("FWD", 73)
       },
       {
         id: "aus_11",
         name: "Craig Goodwin",
         position: "FWD",
         rating: 74,
-        isSubstitute: false
+        isSubstitute: false,
+        abilities: generateAbilities("FWD", 74)
       },
       {
         id: "aus_12",
         name: "Andrew Redmayne",
         position: "GK",
         rating: 72,
-        isSubstitute: true
+        isSubstitute: true,
+        abilities: generateAbilities("GK", 72)
       },
       {
         id: "aus_13",
         name: "Bailey Wright",
         position: "DEF",
         rating: 71,
-        isSubstitute: true
+        isSubstitute: true,
+        abilities: generateAbilities("DEF", 71)
       },
       {
         id: "aus_14",
         name: "Riley McGree",
         position: "MID",
         rating: 73,
-        isSubstitute: true
+        isSubstitute: true,
+        abilities: generateAbilities("MID", 73)
       },
       {
         id: "aus_15",
         name: "Jamie Maclaren",
         position: "FWD",
         rating: 74,
-        isSubstitute: true
+        isSubstitute: true,
+        abilities: generateAbilities("FWD", 74)
       }
     ],
     coach: {

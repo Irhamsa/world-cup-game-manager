@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useGame } from '../contexts/GameContext';
-import { Team, MatchEvent } from '../types/game'; // Added MatchEvent import
+import { Team, MatchEvent } from '../types/game';
 import { Button } from '../components/ui/button';
 import { ArrowLeft, Pause, Play } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -22,6 +22,7 @@ import {
 import SideSelection from '../components/SideSelection';
 
 const QuickMatch = () => {
+  const navigate = useNavigate();
   const { 
     selectedTeams,
     setSelectedTeams,
