@@ -75,10 +75,14 @@ const DraggableLineup = ({ players, formation, onLineupChange }: DraggableLineup
       });
     }
 
+    const updatedPlayer: Player = {
+      ...player,
+      position: positionType,
+      adjustedRating
+    };
+
     const newLineup = lineup.map(p => 
-      p.id === player.id 
-        ? { ...p, position: positionKey, adjustedRating }
-        : p
+      p.id === player.id ? updatedPlayer : p
     );
 
     setLineup(newLineup);
@@ -110,18 +114,18 @@ const DraggableLineup = ({ players, formation, onLineupChange }: DraggableLineup
             }}
             onClick={() => setSelectedPosition(posKey)}
           >
-            {lineup.find(p => p.position === posKey) ? (
+            {lineup.find(p => p.position === posKey.match(/(GK|DEF|MID|FWD)/)?.[0] as ValidPosition) ? (
               <div className="flex flex-col items-center">
                 <div className={`w-12 h-12 rounded-full bg-white flex items-center justify-center
-                              ${lineup.find(p => p.position === posKey)?.adjustedRating !== 
-                                lineup.find(p => p.position === posKey)?.rating ? 'border-2 border-yellow-400' : ''}`}>
+                              ${lineup.find(p => p.position === posKey.match(/(GK|DEF|MID|FWD)/)?.[0] as ValidPosition)?.adjustedRating !== 
+                                lineup.find(p => p.position === posKey.match(/(GK|DEF|MID|FWD)/)?.[0] as ValidPosition)?.rating ? 'border-2 border-yellow-400' : ''}`}>
                   <span className="text-sm font-bold">
-                    {lineup.find(p => p.position === posKey)?.adjustedRating || 
-                     lineup.find(p => p.position === posKey)?.rating}
+                    {lineup.find(p => p.position === posKey.match(/(GK|DEF|MID|FWD)/)?.[0] as ValidPosition)?.adjustedRating || 
+                     lineup.find(p => p.position === posKey.match(/(GK|DEF|MID|FWD)/)?.[0] as ValidPosition)?.rating}
                   </span>
                 </div>
                 <span className="text-xs text-white mt-1">
-                  {lineup.find(p => p.position === posKey)?.name}
+                  {lineup.find(p => p.position === posKey.match(/(GK|DEF|MID|FWD)/)?.[0] as ValidPosition)?.name}
                 </span>
               </div>
             ) : (
