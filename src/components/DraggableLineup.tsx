@@ -9,17 +9,24 @@ interface DraggableLineupProps {
   onLineupChange: (players: Player[]) => void;
 }
 
+interface Position {
+  x: number;
+  y: number;
+}
+
+type Positions = Record<string, Position>;
+
 const DraggableLineup = ({ players, formation, onLineupChange }: DraggableLineupProps) => {
   const [lineup, setLineup] = useState<Player[]>(players);
-  const [positions, setPositions] = useState<{[key: string]: {x: number, y: number}>({});
+  const [positions, setPositions] = useState<Positions>({});
 
   useEffect(() => {
     // Generate positions based on formation
     const formationArray = formation.split('-').map(Number);
-    const positions: {[key: string]: {x: number, y: number}} = {};
+    const newPositions: Positions = {};
     
     // GK position
-    positions['GK'] = { x: 50, y: 90 };
+    newPositions['GK'] = { x: 50, y: 90 };
     
     let currentY = 70;
     let playerIndex = 0;
@@ -29,7 +36,7 @@ const DraggableLineup = ({ players, formation, onLineupChange }: DraggableLineup
       for(let i = 0; i < playersInLine; i++) {
         const position = lineIndex === 0 ? 'DEF' : 
                         lineIndex === formationArray.length - 1 ? 'FWD' : 'MID';
-        positions[`${position}${playerIndex}`] = {
+        newPositions[`${position}${playerIndex}`] = {
           x: spacing * (i + 1),
           y: currentY
         };
@@ -38,7 +45,7 @@ const DraggableLineup = ({ players, formation, onLineupChange }: DraggableLineup
       currentY -= 20;
     });
     
-    setPositions(positions);
+    setPositions(newPositions);
   }, [formation]);
 
   const calculateAdjustedRating = (player: Player, positionType: string) => {
