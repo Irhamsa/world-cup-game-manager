@@ -48,15 +48,20 @@ const DraggableLineup = ({ players, formation, onLineupChange }: DraggableLineup
     setPositions(newPositions);
   }, [formation]);
 
-  const calculateAdjustedRating = (player: Player, positionType: string) => {
+  const calculateAdjustedRating = (player: Player, positionType: 'GK' | 'DEF' | 'MID' | 'FWD') => {
     if (player.position !== positionType) {
       return player.rating - 2;
     }
     return player.rating;
   };
 
-  const handleDragEnd = (player: Player, newPosition: string) => {
-    const adjustedRating = calculateAdjustedRating(player, newPosition);
+  const handleDragEnd = (player: Player, newPositionKey: string) => {
+    // Extract the base position type from the position key (e.g., 'DEF0' -> 'DEF')
+    const positionType = newPositionKey.match(/(GK|DEF|MID|FWD)/)?.[0] as 'GK' | 'DEF' | 'MID' | 'FWD';
+    
+    if (!positionType) return;
+
+    const adjustedRating = calculateAdjustedRating(player, positionType);
     if (adjustedRating < player.rating) {
       toast({
         title: "Position Warning",
@@ -127,8 +132,8 @@ const DraggableLineup = ({ players, formation, onLineupChange }: DraggableLineup
             >
               <div className="flex flex-col items-center">
                 <div className={`w-12 h-12 rounded-full bg-white flex items-center justify-center
-                              ${player.position !== positions[player.position] ? 'border-2 border-yellow-400' : ''}`}>
-                  <span className="text-sm font-bold">{player.rating}</span>
+                              ${player.adjustedRating !== player.rating ? 'border-2 border-yellow-400' : ''}`}>
+                  <span className="text-sm font-bold">{player.adjustedRating || player.rating}</span>
                 </div>
                 <span className="text-xs text-white mt-1">{player.name}</span>
               </div>
