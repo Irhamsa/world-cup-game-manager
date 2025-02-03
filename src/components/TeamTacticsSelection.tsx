@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { Team, PlayingStyle } from '../types/game';
 import { Button } from './ui/button';
-import { ScrollArea } from './ui/scroll-area';
 import { Play } from 'lucide-react';
 import { 
   Select,
@@ -12,6 +11,8 @@ import {
 } from "./ui/select";
 import { Slider } from "./ui/slider";
 import { toast } from './ui/use-toast';
+import DraggableLineup from './DraggableLineup';
+import BackButton from './BackButton';
 
 interface TeamTacticsSelectionProps {
   team: Team;
@@ -54,119 +55,99 @@ const TeamTacticsSelection = ({ team, onConfirm }: TeamTacticsSelectionProps) =>
   };
 
   return (
-    <div className="p-4 space-y-4">
-      <h3 className="text-lg font-semibold">{team.name} Tactics</h3>
+    <div className="p-4 relative">
+      <BackButton />
       
-      <div className="space-y-4">
-        <div className="space-y-2">
-          <label className="text-sm font-medium">Playing Style</label>
-          <Select
-            value={playingStyle}
-            onValueChange={(value) => setPlayingStyle(value as PlayingStyle)}
-          >
-            <SelectTrigger>
-              <SelectValue placeholder="Select playing style" />
-            </SelectTrigger>
-            <SelectContent>
-              {playingStyles.map(style => (
-                <SelectItem key={style} value={style}>
-                  {style.replace('_', ' ')}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
+      <h3 className="text-lg font-semibold text-center mb-4">{team.name} Tactics</h3>
+      
+      <div className="grid md:grid-cols-2 gap-8">
+        <div className="space-y-6">
+          <div className="space-y-2">
+            <label className="text-sm font-medium">Playing Style</label>
+            <Select
+              value={playingStyle}
+              onValueChange={(value) => setPlayingStyle(value as PlayingStyle)}
+            >
+              <SelectTrigger>
+                <SelectValue placeholder="Select playing style" />
+              </SelectTrigger>
+              <SelectContent>
+                {playingStyles.map(style => (
+                  <SelectItem key={style} value={style}>
+                    {style.replace('_', ' ')}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
 
-        <div className="space-y-2">
-          <label className="text-sm font-medium">Formation</label>
-          <Select
-            value={selectedFormation}
-            onValueChange={setSelectedFormation}
-          >
-            <SelectTrigger>
-              <SelectValue placeholder="Select formation" />
-            </SelectTrigger>
-            <SelectContent>
-              {formations.map(formation => (
-                <SelectItem key={formation} value={formation}>
-                  {formation}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+          <div className="space-y-2">
+            <label className="text-sm font-medium">Formation</label>
+            <Select
+              value={selectedFormation}
+              onValueChange={setSelectedFormation}
+            >
+              <SelectTrigger>
+                <SelectValue placeholder="Select formation" />
+              </SelectTrigger>
+              <SelectContent>
+                {formations.map(formation => (
+                  <SelectItem key={formation} value={formation}>
+                    {formation}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+
+          <div className="space-y-4">
+            <div className="space-y-2">
+              <label className="text-sm font-medium">Team Pressure</label>
+              <Slider
+                value={[pressureLevel]}
+                onValueChange={([value]) => setPressureLevel(value)}
+                max={100}
+                step={1}
+              />
+            </div>
+
+            <div className="space-y-2">
+              <label className="text-sm font-medium">Team Width</label>
+              <Slider
+                value={[width]}
+                onValueChange={([value]) => setWidth(value)}
+                max={100}
+                step={1}
+              />
+            </div>
+
+            <div className="space-y-2">
+              <label className="text-sm font-medium">Team Depth</label>
+              <Slider
+                value={[depth]}
+                onValueChange={([value]) => setDepth(value)}
+                max={100}
+                step={1}
+              />
+            </div>
+          </div>
         </div>
 
         <div className="space-y-4">
-          <div className="space-y-2">
-            <label className="text-sm font-medium">Team Pressure</label>
-            <Slider
-              value={[pressureLevel]}
-              onValueChange={([value]) => setPressureLevel(value)}
-              max={100}
-              step={1}
-            />
-          </div>
-
-          <div className="space-y-2">
-            <label className="text-sm font-medium">Team Width</label>
-            <Slider
-              value={[width]}
-              onValueChange={([value]) => setWidth(value)}
-              max={100}
-              step={1}
-            />
-          </div>
-
-          <div className="space-y-2">
-            <label className="text-sm font-medium">Team Depth</label>
-            <Slider
-              value={[depth]}
-              onValueChange={([value]) => setDepth(value)}
-              max={100}
-              step={1}
-            />
-          </div>
-        </div>
-
-        <div className="space-y-2">
-          <label className="text-sm font-medium">Starting Lineup</label>
-          <ScrollArea className="h-64 border rounded-md p-2">
-            {team.players.map(player => (
-              <div key={player.id} className="flex items-center space-x-2 p-2">
-                <input
-                  type="checkbox"
-                  checked={startingLineup.includes(player.id)}
-                  onChange={(e) => {
-                    if (e.target.checked) {
-                      if (startingLineup.length < 11) {
-                        setStartingLineup([...startingLineup, player.id]);
-                      } else {
-                        toast({
-                          title: "Maximum Players Reached",
-                          description: "You can only select 11 players for the starting lineup",
-                          variant: "destructive",
-                        });
-                      }
-                    } else {
-                      setStartingLineup(startingLineup.filter(id => id !== player.id));
-                    }
-                  }}
-                  className="rounded border-gray-300"
-                />
-                <span>{player.name}</span>
-                <span className="text-sm text-muted-foreground">
-                  ({player.position}) - OVR: {player.rating}
-                </span>
-              </div>
-            ))}
-          </ScrollArea>
+          <DraggableLineup
+            players={team.players.filter(p => !p.isSubstitute)}
+            formation={selectedFormation}
+            onLineupChange={(players) => {
+              setStartingLineup(players.map(p => p.id));
+            }}
+          />
         </div>
       </div>
 
       <Button 
         onClick={handleStartMatch}
         disabled={startingLineup.length !== 11}
-        className="w-full"
+        className="w-full mt-8"
       >
         <Play className="w-4 h-4 mr-2" />
         Start Match
