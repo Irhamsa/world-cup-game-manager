@@ -61,7 +61,11 @@ const DraggableLineup = ({ players, formation, onLineupChange }: DraggableLineup
     const match = newPositionKey.match(/(GK|DEF|MID|FWD)/);
     if (!match) return;
     
-    const positionType = match[0] as ValidPosition;
+    // Explicitly check if the matched position is a valid position type
+    const positionType = match[0];
+    if (positionType !== 'GK' && positionType !== 'DEF' && positionType !== 'MID' && positionType !== 'FWD') {
+      return;
+    }
     
     const adjustedRating = calculateAdjustedRating(player, positionType);
     if (adjustedRating < player.rating) {
