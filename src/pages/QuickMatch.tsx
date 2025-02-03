@@ -19,9 +19,9 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
+import SideSelection from '../components/SideSelection';
 
 const QuickMatch = () => {
-  const navigate = useNavigate();
   const { 
     selectedTeams,
     setSelectedTeams,
@@ -31,7 +31,11 @@ const QuickMatch = () => {
     setIsPaused,
     matchEvents,
     setMatchEvents,
-    addTrophy
+    addTrophy,
+    playerSide,
+    setPlayerSide,
+    teamTactics,
+    setTeamTactics
   } = useGame();
 
   const [showExitDialog, setShowExitDialog] = useState(false);
@@ -152,16 +156,23 @@ const QuickMatch = () => {
     return <TeamSelection />;
   }
 
+  if (!playerSide) {
+    return <SideSelection />;
+  }
+
   if (!tacticsConfirmed) {
+    const playerTeam = playerSide === 'HOME' ? selectedTeams[0] : selectedTeams[1];
     return (
-      <div className="grid md:grid-cols-2 gap-4 p-4">
+      <div className="p-4">
         <TeamTacticsSelection
-          team={selectedTeams[0]}
-          onConfirm={(formation, lineup) => handleTacticsConfirm(0, formation, lineup)}
-        />
-        <TeamTacticsSelection
-          team={selectedTeams[1]}
-          onConfirm={(formation, lineup) => handleTacticsConfirm(1, formation, lineup)}
+          team={playerTeam}
+          onConfirm={(formation, lineup, tactics) => {
+            handleTacticsConfirm(playerSide === 'HOME' ? 0 : 1, formation, lineup);
+            setTeamTactics({
+              ...tactics,
+              formation
+            });
+          }}
         />
       </div>
     );

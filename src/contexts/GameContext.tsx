@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState } from 'react';
-import { Team, MatchEvent, MatchState, Trophy } from '../types/game';
+import { Team, MatchEvent, MatchState, Trophy, PlayingStyle, TeamTactics } from '../types/game';
 
 interface SaveSlot {
   id: number;
@@ -29,6 +29,10 @@ interface GameContextType {
   setIsPaused: (paused: boolean) => void;
   matchState: MatchState | null;
   setMatchState: (state: MatchState | null) => void;
+  playerSide: 'HOME' | 'AWAY' | null;
+  setPlayerSide: (side: 'HOME' | 'AWAY' | null) => void;
+  teamTactics: TeamTactics | null;
+  setTeamTactics: (tactics: TeamTactics | null) => void;
 }
 
 const GameContext = createContext<GameContextType | undefined>(undefined);
@@ -44,6 +48,8 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
   const [matchTime, setMatchTime] = useState(0);
   const [isPaused, setIsPaused] = useState(true);
   const [matchState, setMatchState] = useState<MatchState | null>(null);
+  const [playerSide, setPlayerSide] = useState<'HOME' | 'AWAY' | null>(null);
+  const [teamTactics, setTeamTactics] = useState<TeamTactics | null>(null);
 
   const toggleMusic = () => setMusicEnabled(!musicEnabled);
   
@@ -74,6 +80,10 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
         setIsPaused,
         matchState,
         setMatchState,
+        playerSide,
+        setPlayerSide,
+        teamTactics,
+        setTeamTactics,
       }}
     >
       {children}

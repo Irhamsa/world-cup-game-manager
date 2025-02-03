@@ -3,8 +3,33 @@ export interface Player {
   name: string;
   position: 'GK' | 'DEF' | 'MID' | 'FWD';
   rating: number;
+  abilities: PlayerAbilities;
   imageUrl?: string;
   isSubstitute: boolean;
+}
+
+export interface PlayerAbilities {
+  pace: number;
+  shooting: number;
+  passing: number;
+  dribbling: number;
+  defending: number;
+  physical: number;
+}
+
+export type PlayingStyle = 
+  | 'POSSESSION'
+  | 'COUNTER_ATTACK'
+  | 'HIGH_PRESS'
+  | 'DEFENSIVE'
+  | 'BALANCED';
+
+export interface TeamTactics {
+  playingStyle: PlayingStyle;
+  formation: string;
+  pressureLevel: number; // 1-100
+  width: number; // 1-100
+  depth: number; // 1-100
 }
 
 export interface Coach {
