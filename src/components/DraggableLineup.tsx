@@ -67,7 +67,7 @@ const DraggableLineup = ({ players, formation, onLineupChange }: DraggableLineup
       return;
     }
     
-    const adjustedRating = calculateAdjustedRating(player, positionType);
+    const adjustedRating = calculateAdjustedRating(player, positionType as ValidPosition);
     if (adjustedRating < player.rating) {
       toast({
         title: "Position Warning",
