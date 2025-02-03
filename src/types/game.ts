@@ -6,6 +6,7 @@ export interface Player {
   abilities: PlayerAbilities;
   imageUrl?: string;
   isSubstitute: boolean;
+  adjustedRating?: number;
 }
 
 export interface PlayerAbilities {
