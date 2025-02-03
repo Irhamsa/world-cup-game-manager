@@ -15,6 +15,7 @@ interface Position {
 }
 
 type Positions = Record<string, Position>;
+type ValidPosition = 'GK' | 'DEF' | 'MID' | 'FWD';
 
 const DraggableLineup = ({ players, formation, onLineupChange }: DraggableLineupProps) => {
   const [lineup, setLineup] = useState<Player[]>(players);
@@ -48,7 +49,7 @@ const DraggableLineup = ({ players, formation, onLineupChange }: DraggableLineup
     setPositions(newPositions);
   }, [formation]);
 
-  const calculateAdjustedRating = (player: Player, positionType: 'GK' | 'DEF' | 'MID' | 'FWD') => {
+  const calculateAdjustedRating = (player: Player, positionType: ValidPosition) => {
     if (player.position !== positionType) {
       return player.rating - 2;
     }
@@ -57,10 +58,11 @@ const DraggableLineup = ({ players, formation, onLineupChange }: DraggableLineup
 
   const handleDragEnd = (player: Player, newPositionKey: string) => {
     // Extract the base position type from the position key (e.g., 'DEF0' -> 'DEF')
-    const positionType = newPositionKey.match(/(GK|DEF|MID|FWD)/)?.[0] as 'GK' | 'DEF' | 'MID' | 'FWD';
+    const match = newPositionKey.match(/(GK|DEF|MID|FWD)/);
+    if (!match) return;
     
-    if (!positionType) return;
-
+    const positionType = match[0] as ValidPosition;
+    
     const adjustedRating = calculateAdjustedRating(player, positionType);
     if (adjustedRating < player.rating) {
       toast({
